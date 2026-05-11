@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sasha Drive • Houston → Baton Rouge</title>
+<style>
+body {font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #000; color: #fff; margin: 0; padding: 20px;}
+.card {background: #1c1c1e; border-radius: 16px; padding: 20px; margin-bottom: 20px;}
+.status {font-size: 28px; font-weight: 700;}
+button {width: 100%; padding: 16px; margin: 8px 0; border: none; border-radius: 12px; font-size: 17px; font-weight: 600;}
+.green {background: #34c759; color: white;}
+</style>
+</head>
+<body>
+<div class="card">
+<h1 style="text-align:center">🚗 Sasha to The Legacy</h1>
+<p style="text-align:center; color:#8e8e93">Houston → Baton Rouge • May 11 2026</p>
+<p id="status" class="status" style="text-align:center">Ready to Depart</p>
+<p id="time" style="text-align:center; color:#8e8e93">Last updated: Just now</p>
+</div>
+
+<div class="card">
+<h3>Planned Stops</h3>
+<p>1. Buc-ee’s Baytown (~50-70 min in) - Big dog + bathroom break</p>
+<p>2. Quick Louisiana stop (~2.5 hrs later)</p>
+<p>Arrival target: 6:30 - 8:00 PM</p>
+</div>
+
+<div class="card">
+<button onclick="updateStatus('Departed from 2400 S Loop W, Houston 🏠')">Departed Houston</button>
+<button onclick="updateStatus('Arrived at Buc-ee’s Baytown 🦫 - Dog & rest break')">At Buc-ee’s</button>
+<button onclick="updateStatus('Left Buc-ee’s - Back on I-10 East')">Left Buc-ee’s</button>
+<button onclick="updateStatus('At Quick Stop 2 - Louisiana')">At Quick Stop 2</button>
+<button onclick="updateStatus('Arrived safely at The Legacy, Baton Rouge ✅')" class="green">Arrived at The Legacy</button>
+<button onclick="pingLocation()" style="background:#007aff;color:white">📍 Send Live GPS Ping</button>
+</div>
+
+<div class="card">
+<h3>For Jéan</h3>
+<p>Refresh this page to see latest updates.<br>Primary tracking: Use <strong>Find My</strong> for live moving dot.</p>
+</div>
+
+<script>
+function updateStatus(msg) {
+  document.getElementById('status').textContent = msg;
+  document.getElementById('time').textContent = 'Last updated: ' + new Date().toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'});
+}
+function pingLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      const lat = position.coords.latitude.toFixed(4);
+      const lon = position.coords.longitude.toFixed(4);
+      updateStatus(`📍 Live Location: ${lat}, ${lon}`);
+      alert('GPS ping sent! Jéan can refresh the page.');
+    });
+  } else {
+    alert('Location services not available.');
+  }
+}
+</script>
+</body>
+</html>
